@@ -1,0 +1,665 @@
+{
+  "dataset": {
+    "name": "golden_qa_hybrid_rag_corpus",
+    "version": "2.0.0",
+    "description": "Hand-written golden Q&A pairs over the FastAPI official documentation corpus. Covers straightforward lookups, cross-document multi-hop, no-answer, and ambiguous questions.",
+    "corpus_documents": [
+      "data/raw/fastapi_docs"
+    ],
+    "category_counts": {
+      "lookup": 20,
+      "multi_hop": 12,
+      "no_answer": 12,
+      "ambiguous": 8
+    }
+  },
+  "questions": [
+    {
+      "id": "q001",
+      "category": "lookup",
+      "question": "What is FastAPI?",
+      "answer": "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.",
+      "source_documents": [
+        "index.md"
+      ],
+      "source_sections": [
+        "FastAPI"
+      ],
+      "notes": "Verbatim from the index page opening definition."
+    },
+    {
+      "id": "q002",
+      "category": "lookup",
+      "question": "In the FastAPI docs query-parameters example, what are the default values of skip and limit?",
+      "answer": "In the example above they have default values of `skip=0` and `limit=10`.",
+      "source_documents": [
+        "tutorial/query-params.md"
+      ],
+      "source_sections": [
+        "Defaults"
+      ],
+      "notes": "Verbatim single-fact answer from the Defaults section."
+    },
+    {
+      "id": "q003",
+      "category": "lookup",
+      "question": "When item_id is declared as an int, what JSON does the path-parameters example return for /items/3?",
+      "answer": "{\"item_id\": 3}",
+      "source_documents": [
+        "tutorial/path-params.md"
+      ],
+      "source_sections": [
+        "Data conversion"
+      ],
+      "notes": "Verbatim response; the doc notes the value is 3 as a Python int, not the string \"3\"."
+    },
+    {
+      "id": "q004",
+      "category": "lookup",
+      "question": "What response body does the simplest FastAPI app with @app.get(\"/\") return?",
+      "answer": "{\"message\": \"Hello World\"}",
+      "source_documents": [
+        "tutorial/first-steps.md"
+      ],
+      "source_sections": [
+        "Check it"
+      ],
+      "notes": "Verbatim JSON returned by the first-steps example."
+    },
+    {
+      "id": "q005",
+      "category": "lookup",
+      "question": "Which HTTP methods does the FastAPI docs describe as the ones normally used to create, read, update, and delete data?",
+      "answer": "POST: to create data. GET: to read data. PUT: to update data. DELETE: to delete data.",
+      "source_documents": [
+        "tutorial/first-steps.md"
+      ],
+      "source_sections": [
+        "Operation"
+      ],
+      "notes": "Verbatim mapping of methods to actions from the first-steps recap."
+    },
+    {
+      "id": "q006",
+      "category": "lookup",
+      "question": "What do you import to test a FastAPI application, and where does it come from?",
+      "answer": "from fastapi.testclient import TestClient — FastAPI provides the same starlette.testclient as fastapi.testclient just as a convenience, but it comes directly from Starlette.",
+      "source_documents": [
+        "tutorial/testing.md"
+      ],
+      "source_sections": [
+        "Using TestClient"
+      ],
+      "notes": "Verbatim: FastAPI mirrors starlette.testclient; TestClient is used like httpx."
+    },
+    {
+      "id": "q007",
+      "category": "lookup",
+      "question": "According to the FastAPI docs, what is a middleware?",
+      "answer": "A \"middleware\" is a function that works with every request before it is processed by any specific path operation. And also with every response before returning it.",
+      "source_documents": [
+        "tutorial/middleware.md"
+      ],
+      "source_sections": [
+        "Middleware"
+      ],
+      "notes": "Verbatim definition from the middleware tutorial."
+    },
+    {
+      "id": "q008",
+      "category": "lookup",
+      "question": "When do FastAPI background tasks run relative to the response?",
+      "answer": "You can define background tasks to be run after returning a response.",
+      "source_documents": [
+        "tutorial/background-tasks.md"
+      ],
+      "source_sections": [
+        "Background Tasks"
+      ],
+      "notes": "Verbatim opening statement of the background-tasks tutorial."
+    },
+    {
+      "id": "q009",
+      "category": "lookup",
+      "question": "Which FastAPI extra data type is represented as a float of total seconds in requests and responses?",
+      "answer": "datetime.timedelta: In requests and responses will be represented as a float of total seconds.",
+      "source_documents": [
+        "tutorial/extra-data-types.md"
+      ],
+      "source_sections": [
+        "Other data types"
+      ],
+      "notes": "Verbatim from the extra-data-types list."
+    },
+    {
+      "id": "q010",
+      "category": "lookup",
+      "question": "In what format is a datetime.datetime represented in FastAPI requests and responses?",
+      "answer": "In requests and responses will be represented as a str in ISO 8601 format, like: 2008-09-15T15:53:00+05:00.",
+      "source_documents": [
+        "tutorial/extra-data-types.md"
+      ],
+      "source_sections": [
+        "Other data types"
+      ],
+      "notes": "Verbatim from the extra-data-types list."
+    },
+    {
+      "id": "q011",
+      "category": "lookup",
+      "question": "Which string validation parameters can be added to a Query parameter according to the docs?",
+      "answer": "Validations specific for strings: min_length, max_length, pattern.",
+      "source_documents": [
+        "tutorial/query-params-str-validations.md"
+      ],
+      "source_sections": [
+        "Recap"
+      ],
+      "notes": "Verbatim recap of string-specific validations."
+    },
+    {
+      "id": "q012",
+      "category": "lookup",
+      "question": "What are the four numeric validation parameters FastAPI provides for Query and Path?",
+      "answer": "gt: greater than; ge: greater than or equal; lt: less than; le: less than or equal.",
+      "source_documents": [
+        "tutorial/path-params-numeric-validations.md"
+      ],
+      "source_sections": [
+        "Recap"
+      ],
+      "notes": "Verbatim numeric-validation recap."
+    },
+    {
+      "id": "q013",
+      "category": "lookup",
+      "question": "What is the default HTTP status code for a FastAPI path operation response?",
+      "answer": "200 is the default status code, which means everything was \"OK\".",
+      "source_documents": [
+        "tutorial/response-status-code.md"
+      ],
+      "source_sections": [
+        "About HTTP status codes"
+      ],
+      "notes": "Verbatim from the HTTP status-code overview."
+    },
+    {
+      "id": "q014",
+      "category": "lookup",
+      "question": "According to the FastAPI CORS docs, what makes up an origin?",
+      "answer": "An origin is the combination of protocol (http, https), domain (myapp.com, localhost, localhost.tiangolo.com), and port (80, 443, 8080).",
+      "source_documents": [
+        "tutorial/cors.md"
+      ],
+      "source_sections": [
+        "Origin"
+      ],
+      "notes": "Verbatim definition of an origin."
+    },
+    {
+      "id": "q015",
+      "category": "lookup",
+      "question": "How do you return an HTTP error response to a client in FastAPI?",
+      "answer": "To return HTTP responses with errors to the client you use HTTPException.",
+      "source_documents": [
+        "tutorial/handling-errors.md"
+      ],
+      "source_sections": [
+        "Use HTTPException"
+      ],
+      "notes": "Verbatim from the handling-errors tutorial."
+    },
+    {
+      "id": "q016",
+      "category": "lookup",
+      "question": "Which package must be installed before FastAPI can receive uploaded files?",
+      "answer": "python-multipart.",
+      "source_documents": [
+        "tutorial/request-files.md"
+      ],
+      "source_sections": [
+        "Request Files"
+      ],
+      "notes": "Verbatim: uploaded files are sent as form data, which requires python-multipart."
+    },
+    {
+      "id": "q017",
+      "category": "lookup",
+      "question": "By default, how does the Header parameter convert parameter names?",
+      "answer": "By default, Header will convert the parameter names characters from underscore (_) to hyphen (-) to extract and document the headers.",
+      "source_documents": [
+        "tutorial/header-params.md"
+      ],
+      "source_sections": [
+        "Automatic conversion"
+      ],
+      "notes": "Verbatim from the automatic-conversion section."
+    },
+    {
+      "id": "q018",
+      "category": "lookup",
+      "question": "What is an environment variable according to the FastAPI docs?",
+      "answer": "An environment variable (also known as an env var) is a value that lives outside of your Python code, in the operating system, and can be read by your application and other programs.",
+      "source_documents": [
+        "environment-variables.md"
+      ],
+      "source_sections": [
+        "Environment Variables"
+      ],
+      "notes": "Verbatim opening definition."
+    },
+    {
+      "id": "q019",
+      "category": "lookup",
+      "question": "In the command uvicorn main:app, what do main and app refer to?",
+      "answer": "main: the file main.py (the Python \"module\"). app: the object created inside of main.py with the line app = FastAPI().",
+      "source_documents": [
+        "deployment/manually.md"
+      ],
+      "source_sections": [
+        "Run a Server Manually"
+      ],
+      "notes": "Verbatim explanation of the uvicorn import string."
+    },
+    {
+      "id": "q020",
+      "category": "lookup",
+      "question": "Which command serves a FastAPI application and which server does it use underneath?",
+      "answer": "When you install FastAPI, it comes with a production server, Uvicorn, and you can start it with the fastapi run command.",
+      "source_documents": [
+        "deployment/manually.md"
+      ],
+      "source_sections": [
+        "Use the fastapi run Command"
+      ],
+      "notes": "Verbatim: fastapi run wraps Uvicorn."
+    },
+    {
+      "id": "q021",
+      "category": "multi_hop",
+      "question": "If an app declares item_id: int as a path parameter and skip=0, limit=10 as query parameters, what does a request to /items/3?skip=20 deliver?",
+      "answer": "item_id is converted to the int 3 (path-params: requesting /items/3 returns {\"item_id\":3}); skip is taken from the URL as 20 because you set it in the URL, and limit keeps its default value of 10 (query-params: as they are part of the URL, query values are \"naturally\" strings, then converted to their declared types).",
+      "source_documents": [
+        "tutorial/path-params.md",
+        "tutorial/query-params.md"
+      ],
+      "source_sections": [
+        "Path parameters with types + Defaults"
+      ],
+      "notes": "Combine path conversion (path-params) with query defaults/URL override (query-params)."
+    },
+    {
+      "id": "q022",
+      "category": "multi_hop",
+      "question": "How do you declare a Pydantic request body and then keep a plaintext password out of the response?",
+      "answer": "Declare the input model, e.g. UserIn with the password, so FastAPI reads the request body as JSON and validates it (body.md). Then declare an output model such as UserOut without the password and set response_model to it; FastAPI will take care of filtering out all the data that is not declared in the output model (response-model.md).",
+      "source_documents": [
+        "tutorial/body.md",
+        "tutorial/response-model.md"
+      ],
+      "source_sections": [
+        "Declare it as a parameter + Add an output model"
+      ],
+      "notes": "Spans Pydantic-body declaration and response model output filtering."
+    },
+    {
+      "id": "q023",
+      "category": "multi_hop",
+      "question": "When do background tasks run relative to middleware and to dependency exit code in FastAPI?",
+      "answer": "Background tasks run after returning a response (background-tasks.md). Per middleware.md: if you have dependencies with yield, the exit code will run after the middleware; and if there were any background tasks, they will run after all the middleware.",
+      "source_documents": [
+        "tutorial/background-tasks.md",
+        "tutorial/middleware.md"
+      ],
+      "source_sections": [
+        "Background Tasks + Technical Details"
+      ],
+      "notes": "Combine the background-tasks definition with the middleware execution-order note."
+    },
+    {
+      "id": "q024",
+      "category": "multi_hop",
+      "question": "After creating your first FastAPI app in main.py, how do you write and run a test for it?",
+      "answer": "Put the app in main.py (first-steps.md, run with fastapi dev). Then create a TestClient by passing your FastAPI application to it, write functions with names starting with test_ and standard assert statements, install pytest, and run pytest from the terminal — pytest will detect the files and tests automatically (testing.md).",
+      "source_documents": [
+        "tutorial/first-steps.md",
+        "tutorial/testing.md"
+      ],
+      "source_sections": [
+        "First Steps + Using TestClient / Run it"
+      ],
+      "notes": "Span the app skeleton and the pytest/TestClient workflow."
+    },
+    {
+      "id": "q025",
+      "category": "multi_hop",
+      "question": "How do you declare cookie and header parameters, and what happens if you use a plain parameter instead?",
+      "answer": "Declare cookies with Cookie and headers with Header, using the same structure as Path and Query. To declare cookies you need to use Cookie, because otherwise the parameters would be interpreted as query parameters (cookie-params.md); to declare headers you need to use Header for the same reason, and Header converts underscores to hyphens by default (header-params.md).",
+      "source_documents": [
+        "tutorial/cookie-params.md",
+        "tutorial/header-params.md"
+      ],
+      "source_sections": [
+        "Declare Cookie parameters + Automatic conversion"
+      ],
+      "notes": "Both files state the plain-parameter -> query-parameter fallback rule."
+    },
+    {
+      "id": "q026",
+      "category": "multi_hop",
+      "question": "How do you add string validation to a query parameter and numeric validation to a path parameter?",
+      "answer": "Use Query for the query parameter with min_length / max_length / pattern (query-params-str-validations.md), and use Path for the path parameter with gt / ge / lt / le (path-params-numeric-validations.md). Query, Path, and similar classes are subclasses of a common Param class, so they share the same validation arguments.",
+      "source_documents": [
+        "tutorial/query-params-str-validations.md",
+        "tutorial/path-params-numeric-validations.md"
+      ],
+      "source_sections": [
+        "Add more validations + Number validations"
+      ],
+      "notes": "Combine string (Query) and numeric (Path) validation declarations."
+    },
+    {
+      "id": "q027",
+      "category": "multi_hop",
+      "question": "How does FastAPI combine OAuth2 form login with dependency injection to secure endpoints?",
+      "answer": "OAuth2 uses form data for sending the username and password (security/first-steps.md). FastAPI has a powerful Dependency Injection system: path operation functions declare what they require, and FastAPI injects it — this is useful to enforce security and authentication (dependencies/index.md). A dependency such as get_current_user is declared with Depends to protect a path operation.",
+      "source_documents": [
+        "tutorial/security/first-steps.md",
+        "tutorial/dependencies/index.md"
+      ],
+      "source_sections": [
+        "The password flow + What is Dependency Injection"
+      ],
+      "notes": "Span OAuth2 first-steps and the dependency injection overview."
+    },
+    {
+      "id": "q028",
+      "category": "multi_hop",
+      "question": "Which HTTP status-code ranges represent client errors, and how do you raise your own error status code?",
+      "answer": "Status codes from 400 to 499 mean an error from the client (response-status-code.md: an example is 404 for a \"Not Found\" response). To return HTTP responses with errors to the client you use HTTPException — it is a normal Python exception with additional data relevant for APIs, so you raise it, and you can pass any JSON-able value as detail (handling-errors.md).",
+      "source_documents": [
+        "tutorial/response-status-code.md",
+        "tutorial/handling-errors.md"
+      ],
+      "source_sections": [
+        "About HTTP status codes + Use HTTPException"
+      ],
+      "notes": "Combine status-code semantics with the HTTPException mechanism."
+    },
+    {
+      "id": "q029",
+      "category": "multi_hop",
+      "question": "Can a single FastAPI path operation declare multiple request-body parameters, and how are they encoded?",
+      "answer": "Yes: you can add multiple body parameters to your path operation function, e.g. item and user, even though a request can only have a single body (body-multiple-params.md). Request bodies are declared with Pydantic models — FastAPI reads the body of the request as JSON, validates it, and gives you the received data in the parameter (body.md).",
+      "source_documents": [
+        "tutorial/body.md",
+        "tutorial/body-multiple-params.md"
+      ],
+      "source_sections": [
+        "Request Body + Multiple body parameters"
+      ],
+      "notes": "Span the Pydantic request-body mechanism and multiple-body declaration."
+    },
+    {
+      "id": "q030",
+      "category": "multi_hop",
+      "question": "How would you implement a partial update with PATCH that returns 404 when the item does not exist?",
+      "answer": "Use the HTTP PATCH operation to partially update data, and use exclude_unset in item.model_dump(exclude_unset=True) so only the fields actually provided update the stored model (body-updates.md). When the item_id is not found, raise HTTPException with a 404 status code — HTTPException terminates the request right away and sends the HTTP error to the client (handling-errors.md).",
+      "source_documents": [
+        "tutorial/body-updates.md",
+        "tutorial/handling-errors.md"
+      ],
+      "source_sections": [
+        "Partial updates with PATCH + Raise an HTTPException in your code"
+      ],
+      "notes": "Combine the PATCH/exclude_unset pattern with HTTPException error handling."
+    },
+    {
+      "id": "q031",
+      "category": "multi_hop",
+      "question": "How do you set up a virtual environment for a new FastAPI project and then run the app locally?",
+      "answer": "Install uv, create a project with uv init, add fastapi with uv add \"fastapi[standard]\" — uv creates a virtual environment automatically and you run commands with uv run, e.g. uv run fastapi dev (virtual-environments.md). For manual running, use uvicorn main:app, where main is the file main.py and app is the object created with app = FastAPI() (deployment/manually.md).",
+      "source_documents": [
+        "virtual-environments.md",
+        "deployment/manually.md"
+      ],
+      "source_sections": [
+        "Create a Project + Run a Server Manually"
+      ],
+      "notes": "Span the uv/venv workflow and the uvicorn run command."
+    },
+    {
+      "id": "q032",
+      "category": "multi_hop",
+      "question": "Guiding: how do you run multiple worker processes, and why would a Kubernetes deployment avoid --workers?",
+      "answer": "Start multiple workers with the --workers command-line option, e.g. fastapi run --workers 4 main.py, to take advantage of multi-core CPUs (deployment/server-workers.md). But if you have a cluster of machines with Kubernetes, Docker Swarm Mode, or Nomad, you would want to handle replication at the cluster level and run a single Uvicorn process per container instead of multiple workers (deployment/docker.md).",
+      "source_documents": [
+        "deployment/server-workers.md",
+        "deployment/docker.md"
+      ],
+      "source_sections": [
+        "Multiple Workers + Build a Docker Image"
+      ],
+      "notes": "Combine the --workers mechanics with the Kubernetes single-process-per-container guidance."
+    },
+    {
+      "id": "q033",
+      "category": "no_answer",
+      "question": "How much does it cost to run a FastAPI application on AWS per month?",
+      "answer": "Not stated in the corpus. The docs discuss deployment options and FastAPI Cloud, but never publish hosting/pricing costs for third-party clouds like AWS.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "No pricing/hosting cost information exists anywhere in the downloaded docs."
+    },
+    {
+      "id": "q034",
+      "category": "no_answer",
+      "question": "Does FastAPI ship with a built-in rate-limiting middleware?",
+      "answer": "Not stated in the corpus. The middleware docs cover custom HTTP middleware and CORS, but no rate limiting is documented.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "Rate limiting is absent from the middleware and advanced-middleware docs."
+    },
+    {
+      "id": "q035",
+      "category": "no_answer",
+      "question": "What are the default settings for FastAPI's built-in user session management?",
+      "answer": "Not stated in the corpus. FastAPI has no built-in session management; authentication docs use OAuth2 with username/password but do not define session storage or timeouts.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "Sessions are never mentioned as a framework feature in any doc file."
+    },
+    {
+      "id": "q036",
+      "category": "no_answer",
+      "question": "How do I migrate a FastAPI database schema with Alembic?",
+      "answer": "Not stated in the corpus. The SQL databases tutorial uses SQLAlchemy and creates tables directly; Alembic is never mentioned.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "No Alembic / schema-migration content exists in the downloaded docs."
+    },
+    {
+      "id": "q037",
+      "category": "no_answer",
+      "question": "Is a commercial enterprise license available for FastAPI, and how much does it cost?",
+      "answer": "Not stated in the corpus. FastAPI is described as open source (MIT), but enterprise licensing options and pricing are never discussed.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "Licensing details beyond open-source/MIT and pricing are not in the docs."
+    },
+    {
+      "id": "q038",
+      "category": "no_answer",
+      "question": "What is the exact maximum size (in MB) before an UploadFile is spilled from memory to disk?",
+      "answer": "Not stated in the corpus. The docs say UploadFile uses a spooled file stored in memory up to a maximum size limit, but never give the limit value.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "Only the concept is documented; the specific limit number is absent."
+    },
+    {
+      "id": "q039",
+      "category": "no_answer",
+      "question": "Which database does FastAPI recommend as its production default over all others?",
+      "answer": "Not stated in the corpus. The SQL tutorial uses SQLite for the example but the docs explicitly keep the example simple rather than recommending a single production database.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "No single strongest-recommendation database is documented."
+    },
+    {
+      "id": "q040",
+      "category": "no_answer",
+      "question": "How is FastAPI's test suite configured to run on Windows CI runners?",
+      "answer": "Not stated in the corpus. The benchmark page and repo links exist, but CI configuration yaml for Windows runners is not part of these docs.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "CI/runner configuration details are not documented in the corpus."
+    },
+    {
+      "id": "q041",
+      "category": "no_answer",
+      "question": "How do I deploy a FastAPI application to Heroku?",
+      "answer": "Not stated in the corpus. Deployment docs cover running a server manually, containers/Docker, FastAPI Cloud, and cluster managers, but Heroku is never mentioned.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "Heroku is absent from all deployment documentation."
+    },
+    {
+      "id": "q042",
+      "category": "no_answer",
+      "question": "Which Python version does FastAPI support on Windows ARM64 machines?",
+      "answer": "Not stated in the corpus. The docs list Python version requirements generally, but platform-specific (Windows ARM64) support tables are not documented.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "No platform/architecture-specific requirement tables exist."
+    },
+    {
+      "id": "q043",
+      "category": "no_answer",
+      "question": "Can FastAPI be used with Django's ORM as its data layer?",
+      "answer": "Not stated in the corpus. The docs cover SQLAlchemy with SQL databases and use Pydantic; Django and its ORM are never mentioned.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "Django is not referenced anywhere in the downloaded docs."
+    },
+    {
+      "id": "q044",
+      "category": "no_answer",
+      "question": "How do I enable mutual TLS (client certificates) for a FastAPI application?",
+      "answer": "Not stated in the corpus. TLS/proxy-headers are mentioned in deployment contexts, but mutual TLS with client-certificate verification is not documented.",
+      "source_documents": [],
+      "source_sections": [],
+      "notes": "mTLS / client-certificate setup is absent from the corpus."
+    },
+    {
+      "id": "q045",
+      "category": "ambiguous",
+      "question": "How fast is FastAPI?",
+      "answer": "Depends on interpretation: (1) runtime performance — \"Fast: very high performance, on par with NodeJS and Go\"; (2) development speed — \"Fast to code: increase the speed to develop features by about 200% to 300%\". Both readings are valid and retrieve different chunks.",
+      "source_documents": [
+        "index.md"
+      ],
+      "source_sections": [
+        "The key features are"
+      ],
+      "notes": "Two readings: benchmark performance vs developer coding speed."
+    },
+    {
+      "id": "q046",
+      "category": "ambiguous",
+      "question": "How do I install FastAPI?",
+      "answer": "Depends on context: (1) minimal install with uv add fastapi; (2) with the standard extras, uv add \"fastapi[standard]\", which also brings uvicorn/standard and python-multipart for forms/OAuth2. Different docs show each, so multiple answers are valid.",
+      "source_documents": [
+        "virtual-environments.md",
+        "tutorial/security/first-steps.md"
+      ],
+      "source_sections": [
+        "Create a Project + Run it"
+      ],
+      "notes": "Minimal vs standard extras install; both are documented."
+    },
+    {
+      "id": "q047",
+      "category": "ambiguous",
+      "question": "What do I need python-multipart for?",
+      "answer": "Depends on feature: (1) receiving uploaded files, which are sent as form data (request-files.md); (2) OAuth2's password flow, which uses form data to send the username and password (security/first-steps.md). Both are valid and hit different docs.",
+      "source_documents": [
+        "tutorial/request-files.md",
+        "tutorial/security/first-steps.md"
+      ],
+      "source_sections": [
+        "Request Files + Run it"
+      ],
+      "notes": "Same package, two different documented reasons."
+    },
+    {
+      "id": "q048",
+      "category": "ambiguous",
+      "question": "How do I return an error from my API?",
+      "answer": "Depends on the error kind: (1) raise HTTPException with a status code and detail (handling-errors.md); (2) declare a status_code in the path operation decorator so bad results get the right code, using fastapi.status helpers (response-status-code.md). Multiple valid approaches are documented.",
+      "source_documents": [
+        "tutorial/handling-errors.md",
+        "tutorial/response-status-code.md"
+      ],
+      "source_sections": [
+        "Use HTTPException + About HTTP status codes"
+      ],
+      "notes": "Exception raising vs declarative status codes."
+    },
+    {
+      "id": "q049",
+      "category": "ambiguous",
+      "question": "How do I add parameters to my API?",
+      "answer": "Depends on where the data comes from: path parameters (path-params.md), query parameters (query-params.md), headers (header-params.md), cookies (cookie-params.md), or a request body (body.md). Each is declared differently and each answer retrieves different documentation.",
+      "source_documents": [
+        "tutorial/query-params.md",
+        "tutorial/header-params.md"
+      ],
+      "source_sections": [
+        "Query Parameters + Header Parameters"
+      ],
+      "notes": "The question does not specify the parameter location."
+    },
+    {
+      "id": "q050",
+      "category": "ambiguous",
+      "question": "What happens when an item is not found?",
+      "answer": "Depends on the scenario: (1) the handling-errors example raises HTTPException(404) and the client receives {\"detail\": \"Item not found\"}; (2) if the path value cannot be parsed (e.g. /items/foo with item_id typed as int), validation returns an int_parsing error instead. Both error shapes are documented, so the answer is ambiguous.",
+      "source_documents": [
+        "tutorial/handling-errors.md",
+        "tutorial/path-params.md"
+      ],
+      "source_sections": [
+        "The resulting response + Data validation"
+      ],
+      "notes": "Application-level 404 vs request-validation error; different chunks."
+    },
+    {
+      "id": "q051",
+      "category": "ambiguous",
+      "question": "How do I run my FastAPI application?",
+      "answer": "Depends on the stage: (1) development with auto-reload via fastapi dev; (2) production via fastapi run (which wraps Uvicorn) or uvicorn main:app; (3) inside a container with CMD [\"fastapi\", \"run\", \"main.py\", \"--port\", \"80\"]. Multiple valid commands across different docs.",
+      "source_documents": [
+        "deployment/manually.md",
+        "tutorial/first-steps.md"
+      ],
+      "source_sections": [
+        "Use the fastapi run Command + First Steps"
+      ],
+      "notes": "Development vs production vs Docker invocation."
+    },
+    {
+      "id": "q052",
+      "category": "ambiguous",
+      "question": "What determines the shape of the response my API returns?",
+      "answer": "Depends on the mechanism: (1) the path operation function's return type annotation is used for validation, serialization, and filtering (response-model.md); (2) the response_model decorator parameter takes priority and can filter output fields even when the function returns more data; (3) the status_code parameter and response_model_exclude_unset alter the response metadata/content. Several overlapping mechanisms are documented.",
+      "source_documents": [
+        "tutorial/response-model.md",
+        "tutorial/response-status-code.md"
+      ],
+      "source_sections": [
+        "Response Model - Return Type + Response Status Code"
+      ],
+      "notes": "Return-type vs response_model vs status_code all shape the response."
+    }
+  ]
+}

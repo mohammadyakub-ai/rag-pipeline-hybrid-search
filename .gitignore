@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+ENV/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Secrets — never commit credentials
+.env
+.env.local
+.env.*.local
+
+# Runtime data (regenerable — `scripts/seed.py` rebuilds it)
+data/chroma/
+data/bm25/
+data/processed/
+
+# Streamlit / app caches
+.streamlit/
+
+# Logs & runtime files
+*.log
+nohup.out
+*.pid
+*.sock
+
+# Test & tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+src/data/

@@ -1,0 +1,29 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv
+venv
+env
+.Python
+.ipynb_checkpoints
+*.egg-info
+.tox
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# Runtime artifacts — never ship them into images
+data/chroma
+data/bm25
+data/processed
+data/golden_dataset.json
+data/comparison_report.json
+
+# IDE / OS
+.idea
+.vscode
+.DS_Store
+*.log

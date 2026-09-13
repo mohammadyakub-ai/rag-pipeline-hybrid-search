@@ -1,0 +1,13 @@
+# ChromaDB server, tuned for this stack.
+#
+# The stock chromadb/chroma 1.5.9 image is distroless (it has no shell tools),
+# so compose healthchecks cannot run curl/wget/python against it. This image
+# injects a single static curl binary so `docker compose` healthchecks work.
+
+FROM curlimages/curl:latest AS curl
+FROM chromadb/chroma:1.5.9
+
+COPY --from=curl /usr/bin/curl /usr/bin/curl
+
+ENV IS_PERSISTENT=TRUE \
+    ANONYMIZED_TELEMETRY=FALSE

@@ -1,0 +1,114 @@
+# Phase 5.3 — full RAG stack: ChromaDB + API + seed + Streamlit dashboard.
+#
+#   docker compose up --build
+#
+# Services:
+#   chroma     standalone ChromaDB server (persistent data in a named volume)
+#   api        FastAPI service with hybrid retrieval (dense + sparse + RRF + rerank)
+#   seed       one-shot: indexes the sample corpus via POST /v1/ingest
+#   dashboard  Streamlit query dashboard (Phase 5.2)
+#
+# Ports: API http://localhost:8000 · dashboard http://localhost:8501 ·
+#        Chroma (debug) http://localhost:8001
+#
+# To use a real LLM for grounded answers set OPENAI_API_KEY in the shell
+# (or an .env file) before `docker compose up --build`. Without it the stack
+# runs fully offline on mock embeddings and retrieval/companion endpoints work
+# end to end.
+
+services:
+  chroma:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.chroma
+    image: rag-chroma:local
+    container_name: rag-chroma
+    restart: unless-stopped
+    environment:
+      IS_PERSISTENT: "TRUE"
+      ANONYMIZED_TELEMETRY: "FALSE"
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/v1/heartbeat"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    image: rag-api:local
+    container_name: rag-api
+    restart: unless-stopped
+    environment:
+      CHROMA_HOST: chroma
+      CHROMA_PORT: "8000"
+      RAG_CONFIDENCE_THRESHOLD: "0.5"
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      # BM25 index + raw scratch lives in a named volume so it survives restarts.
+      - rag_data:/app/data
+    depends_on:
+      chroma:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request as u; u.urlopen('http://127.0.0.1:8000/healthz', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  seed:
+    image: rag-api:local
+    container_name: rag-seed
+    restart: "no"
+    command:
+      - python
+      - scripts/seed.py
+      - --api
+      - http://api:8000
+      - --corpus-dir
+      - /app/corpus/fastapi_docs
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+    volumes:
+      - rag_data:/app/data
+    depends_on:
+      api:
+        condition: service_healthy
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dashboard
+    image: rag-dashboard:local
+    container_name: rag-dashboard
+    restart: unless-stopped
+    environment:
+      API_BASE_URL: http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request as u; u.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  chroma_data:
+  rag_data:

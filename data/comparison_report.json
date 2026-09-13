@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-09-12T05:43:29.046623+00:00",
+  "mode": "real",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "judge": "gpt-4o-mini",
+  "total_questions": 52,
+  "strategies": {
+    "fixed": {
+      "correctness": 0.2308,
+      "faithfulness": 0.6827,
+      "retrieval_relevance": 0.5865,
+      "citation_accuracy": 0.6538,
+      "avg": 0.53845,
+      "per_type": {
+        "lookup": {
+          "correctness": 0.28,
+          "faithfulness": 0.7
+        },
+        "multi_hop": {
+          "correctness": 0.2667,
+          "faithfulness": 0.6667
+        },
+        "no_answer": {
+          "correctness": 0.0667,
+          "faithfulness": 0.6667
+        },
+        "ambiguous": {
+          "correctness": 0.3,
+          "faithfulness": 0.6875
+        }
+      }
+    },
+    "recursive": {
+      "correctness": 0.2769,
+      "faithfulness": 0.7115,
+      "retrieval_relevance": 0.5385,
+      "citation_accuracy": 0.5,
+      "avg": 0.506725,
+      "per_type": {
+        "lookup": {
+          "correctness": 0.345,
+          "faithfulness": 0.625
+        },
+        "multi_hop": {
+          "correctness": 0.325,
+          "faithfulness": 0.7917
+        },
+        "no_answer": {
+          "correctness": 0.1667,
+          "faithfulness": 0.6667
+        },
+        "ambiguous": {
+          "correctness": 0.2,
+          "faithfulness": 0.875
+        }
+      }
+    },
+    "semantic": {
+      "correctness": 0.3019,
+      "faithfulness": 0.875,
+      "retrieval_relevance": 0.5212,
+      "citation_accuracy": 0.5385,
+      "avg": 0.55915,
+      "per_type": {
+        "lookup": {
+          "correctness": 0.365,
+          "faithfulness": 0.825
+        },
+        "multi_hop": {
+          "correctness": 0.3,
+          "faithfulness": 0.8333
+        },
+        "no_answer": {
+          "correctness": 0.1667,
+          "faithfulness": 0.9167
+        },
+        "ambiguous": {
+          "correctness": 0.35,
+          "faithfulness": 1.0
+        }
+      }
+    }
+  },
+  "winner": "semantic",
+  "summary": "semantic chunking outperformed fixed on correctness by 30.8% and faithfulness by 28.2%. Overall avg: semantic 0.56 vs fixed 0.54."
+}
