@@ -57,7 +57,7 @@ This project treats the RAG pipeline like source code: benchmarked against a fix
 ## 🏗️ Architecture
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[Document Loader] --> B[Chunker<br/>fixed / recursive / semantic]
     B --> C[Deduplication<br/>hash + cosine > 0.95]
     C --> D[(ChromaDB<br/>dense index)]
