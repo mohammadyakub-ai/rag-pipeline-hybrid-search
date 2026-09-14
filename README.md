@@ -85,7 +85,7 @@ flowchart TD
 
 ![Demo](assets/demo.gif)
 
-📺 **[Watch the full walkthrough video](https://drive.google.com/PLACEHOLDER_LINK)**
+📺 **[Watch the full video here](https://drive.google.com/file/d/1g7b-DyIWULrTAlk9T3Xe7PRY1MsGjnHK/view?usp=sharing)**
 
 </div>
 
